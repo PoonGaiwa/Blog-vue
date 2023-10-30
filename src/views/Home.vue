@@ -31,7 +31,8 @@
           </el-col>
           <el-col :span="4" class="hidden-xs-only">
             <div class="blog-header--login">
-              <span @click="login">登录</span>/<span @click="register"
+              <span @click="refreshModal('login')">登录</span>/<span
+                @click="refreshModal('register')"
                 >注册</span
               >
             </div>
@@ -46,54 +47,24 @@
       </el-container>
       <el-footer class="blog-footer" height="10vh">底部</el-footer>
     </el-container>
-    <el-dialog
-      title="登录"
-      :visible.sync="dialogVisible"
-      width="50%"
-      :before-close="handleClose"
-    >
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
-      </span>
-    </el-dialog>
+    <BaseModal />
   </div>
 </template>
 
 <script>
+import BaseModal from "@/components/base/BaseModal";
 // @ is an alias to /src
-
 export default {
   name: "HomeView",
+  components: {
+    BaseModal,
+  },
   data() {
-    return {
-      dialogVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
-      },
-    };
+    return {};
   },
   methods: {
-    login() {
-      this.dialogVisible = true;
-    },
-    register() {
-      this.dialogVisible = true;
-    },
-    handleClose() {
-      this.dialogVisible = false;
-    },
-    onSubmit() {
-      console.log("submit!");
+    refreshModal(type) {
+      this.$store.dispatch("modal/open", type);
     },
   },
 };

@@ -53,8 +53,13 @@ export default {
     ],
     btns: [
       {
+        targetName: 'close',
+        name: '取消',
+      },
+      {
         targetName: 'confirm',
-        name: '提交',
+        name: '注册',
+        isSubmit: true
       }
     ]
   },
