@@ -1,5 +1,6 @@
 import service from './common'
 import store from 'store'
+import vuex from '@/store/index'
 import base from '@/config/base.config'
 import API_LIST from '@/config/api.config'
 import encrypt from '@/util/encrypt'
@@ -30,6 +31,7 @@ export default async function Http({ type, data }) {
       // 本地存储token
       store.set(TOKENNAME, token);
       store.set('uid', uid)
+      vuex.dispatch('login')
     }
     return result
   } catch (err) {

@@ -3,8 +3,8 @@ import store from 'store'
 import base from '@/config/base.config'
 const { BASE_URL, TOKENNAME, TIMEOUT } = base
 
-axios.defaults.baseURL = BASE_URL
 const service = axios.create({
+  baseURL: BASE_URL,
   timeout: TIMEOUT
 })
 

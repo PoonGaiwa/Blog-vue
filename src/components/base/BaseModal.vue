@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 23:22:44
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-31 17:54:39
+ * @LastEditTime: 2023-10-31 21:32:32
  * @FilePath: \vue-blog\src\components\base\BaseModal.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -79,7 +79,6 @@ export default {
       refForm.$refs["elForm"].validate(async (valid) => {
         if (valid) {
           console.log("提交成功!");
-          // console.log(this.$api);
           let result = await this.$api({ type: this.type, data: refForm.form });
           console.log(result);
         } else {

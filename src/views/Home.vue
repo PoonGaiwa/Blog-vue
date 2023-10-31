@@ -30,12 +30,7 @@
             </el-menu>
           </el-col>
           <el-col :span="4" class="hidden-xs-only">
-            <div class="blog-header--login">
-              <span @click="refreshModal('login')">登录</span>/<span
-                @click="refreshModal('register')"
-                >注册</span
-              >
-            </div>
+            <component :is="loginComponent"></component>
           </el-col>
         </el-row>
       </el-header>
@@ -53,18 +48,29 @@
 
 <script>
 import BaseModal from "@/components/base/BaseModal";
+import UserLoginHead from "@/components/user/UserLoginHead";
+import UserImgAvatar from "@/components/user/UserImgAvatar";
 // @ is an alias to /src
 export default {
   name: "HomeView",
   components: {
     BaseModal,
+    UserLoginHead,
+    UserImgAvatar,
   },
   data() {
     return {};
   },
-  methods: {
-    refreshModal(type) {
-      this.$store.dispatch("modal/open", type);
+  created() {
+    let isLogin = this.$store.state.token;
+    if (isLogin) {
+      this.$store.dispatch("getUserInfo");
+    }
+  },
+  methods: {},
+  computed: {
+    loginComponent() {
+      return this.$store.state.token ? "UserImgAvatar" : "UserLoginHead";
     },
   },
 };

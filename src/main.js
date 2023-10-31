@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 18:50:11
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-30 22:57:21
+ * @LastEditTime: 2023-10-31 21:12:09
  * @FilePath: \vue-blog\src\main.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -19,7 +19,14 @@ Vue.config.productionTip = false
 
 Vue.use(httpPlugin)
 
+const MIXIN = {
+  created: function () {
+
+  }
+}
+
 new Vue({
+  mixins: [MIXIN],
   store,
   router,
   render: h => h(App)
