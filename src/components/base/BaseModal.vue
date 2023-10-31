@@ -1,3 +1,11 @@
+<!--
+ * @Author: Gaiwa 13012265332@163.com
+ * @Date: 2023-10-30 23:22:44
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-31 11:48:11
+ * @FilePath: \vue-blog\src\components\base\BaseModal.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div>
     <el-dialog
@@ -6,27 +14,12 @@
       :width="width"
       :before-close="close"
     >
-      <el-form :model="form" v-if="formData">
-        <el-form-item
-          v-for="formItem in formData"
-          :key="formItem.query"
-          :label="formItem.label"
-          label-width="100px"
-        >
-          <el-input
-            v-model="form[formItem['query']]"
-            :type="formItem.type"
-            :name="formItem.query"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-      </el-form>
-
+      <BaseForm :type="type" v-if="hasForm" ref="form" />
       <div slot="footer" class="dialog-footer">
         <el-button
           v-for="btn in btns"
           :key="btn.targetName"
-          @click="handlerBtn(btn.targetName)"
+          @click="handlerBtn(btn.targetName, btn.isSubmit)"
           >{{ btn.name }}</el-button
         >
       </div>
@@ -37,24 +30,26 @@
 <script>
 import MODAL_DATA from "@/config/modal.config";
 import { createNamespacedHelpers } from "vuex";
+import BaseForm from "./BaseForm";
 const { mapState, mapActions } = createNamespacedHelpers("modal");
 export default {
   name: "BaseModal",
+  components: {
+    BaseForm,
+  },
   data() {
-    return {
-      form: {},
-    };
+    return {};
   },
   computed: {
     ...mapState(["isShow", "type"]),
     title() {
       return MODAL_DATA[this.type]?.title ?? "默认modal";
     },
-    formData() {
-      return MODAL_DATA[this.type]?.formData;
-    },
     width() {
       return MODAL_DATA[this.type]?.width ?? "60%";
+    },
+    hasForm() {
+      return MODAL_DATA[this.type]?.formType;
     },
     btns() {
       return (
@@ -72,20 +67,26 @@ export default {
     },
   },
   methods: {
-    handlerBtn(action) {
+    handlerBtn(action, isSubmit) {
+      if (isSubmit) {
+        this.submitForm();
+        return;
+      }
       this[action] && this[action]();
     },
-    ...mapActions(["close", "open", "confirm"]),
-  },
-  watch: {
-    "$store.state.modal.type"(newVal) {
-      if (MODAL_DATA[newVal]) {
-        this.form = MODAL_DATA[newVal].formData.reduce((acc, curr) => {
-          acc[curr["query"]] = "";
-          return acc;
-        }, {});
-      }
+    submitForm() {
+      let refForm = this.$refs["form"];
+      refForm.$refs["elForm"].validate((valid) => {
+        if (valid) {
+          console.log("提交成功!");
+          console.log(refForm.form);
+        } else {
+          alert("提交失败!!");
+          return false;
+        }
+      });
     },
+    ...mapActions(["close", "open", "confirm"]),
   },
 };
 </script>
