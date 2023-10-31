@@ -13,7 +13,11 @@ import './plugins/element.js'
 import router from './router'
 import '@/assets/css/global.styl'
 import 'element-ui/lib/theme-chalk/display.css';
+import httpPlugin from '@/plugins/http'
+
 Vue.config.productionTip = false
+
+Vue.use(httpPlugin)
 
 new Vue({
   store,
