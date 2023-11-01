@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:39:16
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-01 22:26:42
+ * @LastEditTime: 2023-11-01 23:16:30
  * @FilePath: \vue-blog\src\views\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -45,12 +45,6 @@ export default {
   data() {
     return {};
   },
-  created() {
-    let isLogin = this.$store.state.token;
-    if (isLogin) {
-      this.$store.dispatch("getUserInfo");
-    }
-  },
   methods: {},
 };
 </script>
@@ -66,6 +60,10 @@ export default {
 .blog-content {
   margin-top: margin-space * 6;
   height: 80vh;
+}
+
+.blog-main {
+  padding: 0;
 }
 
 .blog-footer {

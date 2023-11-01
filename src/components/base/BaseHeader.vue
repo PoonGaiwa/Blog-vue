@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 21:52:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-01 21:47:53
+ * @LastEditTime: 2023-11-01 22:35:05
  * @FilePath: \vue-blog\src\components\base\BaseHeader.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -55,17 +55,25 @@
 <script>
 import UserLoginHead from "@/components/user/UserLoginHead";
 import UserImgAvatar from "@/components/user/UserImgAvatar";
-
+import { mapGetters } from "vuex";
 export default {
   name: "BaseHeader",
   components: {
     UserLoginHead,
     UserImgAvatar,
   },
+  created() {
+    let isLogin = this.$store.state.token;
+    let nickName = this.userInfo?.nickName;
+    if (isLogin && !nickName) {
+      this.$store.dispatch("getUserInfo");
+    }
+  },
   computed: {
     loginComponent() {
       return this.$store.state.token ? "UserImgAvatar" : "UserLoginHead";
     },
+    ...mapGetters(["userInfo"]),
   },
 };
 </script>
