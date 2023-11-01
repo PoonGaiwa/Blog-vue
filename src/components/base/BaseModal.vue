@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 23:22:44
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-31 21:32:32
+ * @LastEditTime: 2023-11-01 00:11:01
  * @FilePath: \vue-blog\src\components\base\BaseModal.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -78,12 +78,10 @@ export default {
       let refForm = this.$refs["form"];
       refForm.$refs["elForm"].validate(async (valid) => {
         if (valid) {
-          console.log("提交成功!");
-          let result = await this.$api({ type: this.type, data: refForm.form });
-          console.log(result);
+          await this.$api({ type: this.type, data: refForm.form });
+          this.close();
         } else {
-          alert("提交失败!!");
-          return false;
+          refForm.$refs["elForm"].resetFields();
         }
       });
     },

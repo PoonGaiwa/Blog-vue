@@ -1,3 +1,11 @@
+/*
+ * @Author: Gaiwa 13012265332@163.com
+ * @Date: 2023-10-31 17:04:03
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-31 23:51:45
+ * @FilePath: \vue-blog\src\api\http.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import service from './common'
 import store from 'store'
 import vuex from '@/store/index'
@@ -38,7 +46,10 @@ export default async function Http({ type, data }) {
     if (err.response) {
       let message = err.response.data.message
       if (!noMessage) {
-        console.log(message);
+        this.$notify.error({
+          title: '错误',
+          message
+        })
       }
     }
   }

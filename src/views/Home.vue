@@ -1,39 +1,15 @@
+<!--
+ * @Author: Gaiwa 13012265332@163.com
+ * @Date: 2023-10-30 20:39:16
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-31 21:52:38
+ * @FilePath: \vue-blog\src\views\Home.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div class="blog-page">
     <el-container class="blog-container">
-      <el-header class="blog-header" height="10vh">
-        <el-row
-          class="blog-header--wrap"
-          type="flex"
-          justify="center"
-          align="middle"
-        >
-          <el-col :span="2" :xs="{ span: 24 }">
-            <div class="blog-logo">
-              <el-image
-                class="blog-logo--figure"
-                :src="require('../assets/img/logo.png')"
-                fit="cover"
-              ></el-image>
-            </div>
-          </el-col>
-          <el-col :span="16" :offset="2" class="hidden-xs-only">
-            <el-menu class="blog-menu" mode="horizontal" router>
-              <el-menu-item index="/">首页</el-menu-item>
-              <el-menu-item index="/columns">分类</el-menu-item>
-              <el-menu-item index="/articles">文章</el-menu-item>
-              <el-submenu index="/">
-                <template #title>外链</template>
-                <el-menu-item index="/">百度</el-menu-item>
-                <el-menu-item index="/">Element UI</el-menu-item>
-              </el-submenu>
-            </el-menu>
-          </el-col>
-          <el-col :span="4" class="hidden-xs-only">
-            <component :is="loginComponent"></component>
-          </el-col>
-        </el-row>
-      </el-header>
+      <BaseHeader />
       <el-container class="blog-content">
         <el-aside class="blog-aside" width="30%">侧边栏</el-aside>
         <el-main class="blog-main">
@@ -48,15 +24,13 @@
 
 <script>
 import BaseModal from "@/components/base/BaseModal";
-import UserLoginHead from "@/components/user/UserLoginHead";
-import UserImgAvatar from "@/components/user/UserImgAvatar";
+import BaseHeader from "@/components/base/BaseHeader.vue";
 // @ is an alias to /src
 export default {
   name: "HomeView",
   components: {
     BaseModal,
-    UserLoginHead,
-    UserImgAvatar,
+    BaseHeader,
   },
   data() {
     return {};
@@ -68,33 +42,15 @@ export default {
     }
   },
   methods: {},
-  computed: {
-    loginComponent() {
-      return this.$store.state.token ? "UserImgAvatar" : "UserLoginHead";
-    },
-  },
 };
 </script>
 <style lang="stylus">
+@import '@/assets/css/global.styl';
+@import '@/assets/css/base.styl';
+
 .blog-container {
   overflow: hidden;
   height: 100%;
-}
-
-.blog-header {
-  background-color: #ccc;
-  display: flex;
-  align-items: center;
-}
-
-.blog-header .blog-menu {
-  background-color: transparent;
-  border: 0;
-}
-
-.blog-header--wrap {
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .blog-content {
@@ -104,22 +60,6 @@ export default {
 
 .blog-footer {
   margin-top: auto;
-  background-color: #ccc;
-}
-
-.blog-logo {
-  text-align: center;
-  margin: 0 auto;
-  height: 50px;
-  width: 50px;
-}
-
-.blog-logo--figure {
-  height: 50px;
-  width: 50px;
-}
-
-.blog-header--login {
-  text-align: center;
+  background-color: theme-color;
 }
 </style>
