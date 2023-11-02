@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:40:39
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-02 20:59:34
+ * @LastEditTime: 2023-11-02 21:43:45
  * @FilePath: \vue-blog\src\views\ArticleList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%
 -->
@@ -12,10 +12,12 @@
       <Scroll ref="scrollView" @handle-scroll="loadContent">
         <el-card
           v-for="item in articleList"
-          :key="item.id"
+          :key="item._id"
           class="blog-article--item"
         >
-          <CardArticleItem :article="item" />
+          <router-link :to="{ name: 'article', params: { id: item._id } }">
+            <CardArticleItem :article="item"></CardArticleItem>
+          </router-link>
         </el-card>
       </Scroll>
     </div>

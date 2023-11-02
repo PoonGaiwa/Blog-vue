@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 17:04:03
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-31 23:51:45
+ * @LastEditTime: 2023-11-02 22:07:23
  * @FilePath: \vue-blog\src\api\http.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -25,8 +25,6 @@ export default async function Http({ type, data }) {
       let restSymbol = url.match(/:(.*)$/)[1]
       url = url.replace(/:(.*)$/, data[restSymbol]);
     }
-    // console.log(111);
-    console.log(rsaKey);
     if (rsaKey && data[rsaKey]) {
       data[rsaKey] = await encrypt(data[rsaKey])
     }
