@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:39:16
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-02 18:50:44
+ * @LastEditTime: 2023-11-02 20:53:40
  * @FilePath: \vue-blog\src\views\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -20,7 +20,9 @@
         </el-col>
         <el-col :lg="15" :xl="16" class="blog-main-wrap">
           <el-main class="blog-main">
-            <router-view></router-view>
+            <keep-alive include="ArticleListView">
+              <router-view></router-view>
+            </keep-alive>
           </el-main>
         </el-col>
       </el-row>
