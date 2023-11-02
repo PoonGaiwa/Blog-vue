@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 21:52:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-01 22:35:05
+ * @LastEditTime: 2023-11-02 18:38:30
  * @FilePath: \vue-blog\src\components\base\BaseHeader.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,7 +15,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <el-header class="blog-header" height="10vh">
+  <el-header class="blog-header" height="60px">
     <el-row
       class="blog-header--wrap"
       type="flex"

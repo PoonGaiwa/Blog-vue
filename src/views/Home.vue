@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:39:16
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-01 23:16:30
+ * @LastEditTime: 2023-11-02 18:50:44
  * @FilePath: \vue-blog\src\views\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,7 +18,7 @@
         >
           <BaseAside v-if="$store.state.token" />
         </el-col>
-        <el-col :lg="15" :xl="16">
+        <el-col :lg="15" :xl="16" class="blog-main-wrap">
           <el-main class="blog-main">
             <router-view></router-view>
           </el-main>
@@ -53,17 +53,23 @@ export default {
 @import '@/assets/css/base.styl';
 
 .blog-container {
-  overflow: hidden;
   height: 100%;
 }
 
 .blog-content {
-  margin-top: margin-space * 6;
-  height: 80vh;
+  padding-top: padding-space * 6;
+  padding-bottom: padding-space * 3;
+  height: calc(100vh - 60px - 10vh);
+}
+
+.blog-main-wrap {
+  overflow: hidden;
+  height: 100%;
 }
 
 .blog-main {
   padding: 0;
+  height: 100%;
 }
 
 .blog-footer {

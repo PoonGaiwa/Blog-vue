@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import http from '@/api/http'
 
 const install = function (Vue) {
@@ -13,5 +14,5 @@ const install = function (Vue) {
     }
   })
 }
-
+Vue.use(install)
 export default install
