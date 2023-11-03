@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 21:52:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-03 14:08:10
+ * @LastEditTime: 2023-11-03 16:08:56
  * @FilePath: \vue-blog\src\components\base\BaseHeader.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,10 +19,10 @@
     <el-row
       class="blog-header--wrap"
       type="flex"
-      justify="center"
+      justify="start"
       align="middle"
     >
-      <el-col :span="2" :xs="{ span: 24 }">
+      <el-col :span="1">
         <div class="blog-logo">
           <el-image
             class="blog-logo--figure"
@@ -31,7 +31,7 @@
           ></el-image>
         </div>
       </el-col>
-      <el-col :span="16" :offset="2" class="hidden-xs-only">
+      <el-col class="hidden-xs-only">
         <el-menu
           class="blog-head--menu"
           mode="horizontal"
@@ -45,7 +45,7 @@
           <el-menu-item index="/cases">案例</el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="4" class="hidden-xs-only">
+      <el-col :span="2" class="hidden-xs-only">
         <component :is="loginComponent"></component>
       </el-col>
     </el-row>
@@ -87,6 +87,10 @@ export default {
   align-items: center;
   background-color: bg-head-color;
   color: font-head-color;
+}
+
+.blog-header .blog-header--wrap {
+  justify-content: center;
 }
 
 .blog-header .blog-head--menu {

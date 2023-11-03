@@ -38,9 +38,9 @@ export default {
 @import '@/assets/css/base.styl';
 
 .blog-aside {
-  margin-right: margin-space * 10;
+  // margin-right: margin-space * 6;
   padding: (padding-space * 6) 0;
-  max-width: 350px;
+  max-width: 300px;
   box-shadow: 0 0 2px border-main-color;
   border-radius: border-radius-default * 1.5;
   background-color: bg-main-color;

@@ -37,7 +37,7 @@ export default {
       try {
         await this.$api({
           type: "postComment",
-          data: { aid: this.aid,uid:this.uid, content: this.commentVal },
+          data: { aid: this.aid, uid: this.uid, content: this.commentVal },
         });
         this.$notify.success({
           title: "评论成功",
@@ -61,24 +61,10 @@ export default {
 .blog-comment {
   box-sizing: border-box;
   margin-top: margin-space * 4;
-  max-width: 1000px;
   border: 1px solid bg-body-color;
   border-radius: 4px;
   box-shadow: 0 0 1px border-main-color inset;
   background-color: bg-main-color;
-
-  @media screen and (min-width: 1200px) and (max-width: 1650px) {
-    margin-right: 40px;
-  }
-
-  @media screen and (max-width: 1200px) {
-    max-width: 100%;
-    margin: 0 20px;
-  }
-
-  @media screen and (max-width: 768px) {
-    margin: 0;
-  }
 }
 
 .blog-comment--editor {
