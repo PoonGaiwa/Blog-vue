@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:40:39
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-02 21:43:45
+ * @LastEditTime: 2023-11-03 15:08:28
  * @FilePath: \vue-blog\src\views\ArticleList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%
 -->
@@ -89,7 +89,7 @@ export default {
           this.page++;
         })
         .catch((err) => {
-          this.$notify.success({
+          this.$notify.warning({
             title: "获取失败",
             message: err.message,
           });

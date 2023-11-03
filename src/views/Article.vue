@@ -2,22 +2,33 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:40:45
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-03 00:08:45
+ * @LastEditTime: 2023-11-03 15:03:43
  * @FilePath: \vue-blog\src\views\Article.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div>
     <BaseArticleContent :article="article"></BaseArticleContent>
+    <CommentTextArea :aid="article._id"></CommentTextArea>
+    <CommentList :comments="comments"></CommentList>
   </div>
 </template>
 
 <script>
-import BaseArticleContent from "@/components/base/BaseArticleContent.vue";
+import BaseArticleContent from "@/components/base/BaseArticleContent";
+import CommentTextArea from "@/components/comment/CommentTextArea";
+import CommentList from "@/components/comment/CommentList";
 export default {
   name: "ArticleView",
   components: {
     BaseArticleContent,
+    CommentTextArea,
+    CommentList,
+  },
+  provide() {
+    return {
+      getArticleById: this.getArticleById,
+    };
   },
   data() {
     return {
@@ -28,6 +39,11 @@ export default {
   created() {
     this.id = this.$route.params.id;
     this.getArticleById();
+  },
+  computed: {
+    comments() {
+      return this.article.comments;
+    },
   },
   mounted() {},
   methods: {

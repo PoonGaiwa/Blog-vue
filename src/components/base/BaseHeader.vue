@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 21:52:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-02 18:38:30
+ * @LastEditTime: 2023-11-03 14:08:10
  * @FilePath: \vue-blog\src\components\base\BaseHeader.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -41,7 +41,7 @@
         >
           <el-menu-item index="/index">首页</el-menu-item>
           <el-menu-item index="/columns">分类</el-menu-item>
-          <el-menu-item index="/article/:id">文章</el-menu-item>
+          <el-menu-item index="/cases">相册</el-menu-item>
           <el-menu-item index="/cases">案例</el-menu-item>
         </el-menu>
       </el-col>

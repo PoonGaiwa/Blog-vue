@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-11-02 23:48:10
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-03 01:08:39
+ * @LastEditTime: 2023-11-03 14:33:06
  * @FilePath: \vue-blog\src\components\base\BaseArticleContent.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -110,6 +110,7 @@ export default {
 }
 
 .blog-article-wrap {
+  box-sizing: border-box
   max-width: 1000px;
   border: 1px solid bg-body-color;
   border-radius: 4px;
@@ -133,7 +134,7 @@ export default {
 .blog-article {
   margin: margin-space;
   padding: 0 padding-space * 3;
-  color: font-common-color
+  color: font-common-color;
 
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
@@ -159,24 +160,25 @@ export default {
 }
 
 .blog-article--info {
-  padding: padding-space padding-space * 2;
+  padding: padding-space * 2;
   margin: 0 margin-space;
   background-color: bg-body-color;
 
-  &>div {
+  div {
     padding: 0;
   }
 }
 
 .blog-article--content {
   padding: (padding-space * 3) padding-space;
+  width: 100%;
 
-  &>img {
+  img {
     left: 0;
     right: 0;
     margin: (margin-space * 2) auto;
     display: block;
-    width: 50%;
+    width: 50% !important;
     height: auto;
   }
 }
