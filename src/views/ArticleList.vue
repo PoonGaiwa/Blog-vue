@@ -77,6 +77,8 @@ export default {
 </script>
 
 <style lang="stylus">
+@import '@/assets/css/base.styl';
+
 .article-wrap {
   position: relative;
   height: 80vh;

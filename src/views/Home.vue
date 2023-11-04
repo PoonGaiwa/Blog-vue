@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:39:16
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-03 21:37:58
+ * @LastEditTime: 2023-11-04 17:04:25
  * @FilePath: \vue-blog\src\views\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -108,7 +108,6 @@ export default {
 };
 </script>
 <style lang="stylus">
-@import '@/assets/css/global.styl';
 @import '@/assets/css/base.styl';
 
 .blog-container {

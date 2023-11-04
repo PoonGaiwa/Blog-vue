@@ -55,7 +55,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '@/assets/css/global.styl';
 @import '@/assets/css/base.styl';
 
 .blog-comment {

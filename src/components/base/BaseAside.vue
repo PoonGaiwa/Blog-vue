@@ -34,11 +34,9 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '@/assets/css/global.styl';
 @import '@/assets/css/base.styl';
 
 .blog-aside {
-  // margin-right: margin-space * 6;
   padding: (padding-space * 6) 0;
   max-width: 300px;
   box-shadow: 0 0 2px border-main-color;

@@ -8,9 +8,7 @@
 -->
 <template>
   <div class="blog-circle-menu">
-    <transition-group
-      appear
-    >
+    <transition-group appear>
       <el-button
         v-for="item in menuList"
         :key="item.icon"

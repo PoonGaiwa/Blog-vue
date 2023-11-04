@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-11-04 11:12:38
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-04 12:40:59
+ * @LastEditTime: 2023-11-04 22:17:03
  * @FilePath: \vue-blog\src\components\editor\EditorTextArea.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -31,7 +31,7 @@
 <script>
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import EditorClassify from "@/components/editor/EditorClassify.vue";
-
+import Vue from "vue";
 export default {
   components: { Editor, Toolbar, EditorClassify },
   data() {
@@ -39,7 +39,36 @@ export default {
       editor: null,
       html: "",
       toolbarConfig: {},
-      editorConfig: { placeholder: "请输入内容..." },
+      editorConfig: {
+        placeholder: "请输入内容...",
+        MENU_CONF: {
+          uploadImage: {
+            fieldName: "file",
+            server: process.env.VUE_APP_FILE_UPLOAD_PATH,
+            allowedFileTypes: ["image/*"],
+            maxNumberOfFiles: 10,
+            maxFileSize: 10 * 1024 * 1024,
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+            },
+            onBeforeUpload(file) {
+              return file;
+            },
+            onSuccess(file, res) {
+              console.log(`${file.name} 上传成功`, res);
+            },
+            customInsert(res, insertFn) {
+              insertFn(res?.data[0]);
+            },
+            onError(file, err) {
+              Vue.prototype.$notify.error({
+                title: "上传出错",
+                message: err,
+              });
+            },
+          },
+        },
+      },
       mode: "default", // or 'simple'
     };
   },
@@ -49,12 +78,14 @@ export default {
     },
   },
   inject: ["clearTitle"],
+
   methods: {
     onCreated(editor) {
       this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
     },
     clearContent() {
       this.editor.clear();
+      console.log(this.editor);
       this.clearTitle();
     },
     submitArticle() {
@@ -82,16 +113,18 @@ export default {
       return true;
     },
     async postEditorData(content) {
+      let postData = {
+        title: this.title,
+        content: content,
+        // TODO 封装column
+        column: "652f9db7936703d2b737d3d0",
+        author: this.$store.state.userInfo._id,
+        cover: this.content.match(/src="([^"'"]*)"/)?.[1] || undefined,
+      };
       try {
         let result = await this.$api({
           type: "postArticle",
-          data: {
-            title: this.title,
-            content: content,
-            // TODO 封装column
-            column: "652f9db7936703d2b737d3d0",
-            author: this.$store.state.userInfo._id,
-          },
+          data: JSON.parse(JSON.stringify(postData)),
         });
         this.$notify.success({
           message: result.message,
@@ -118,15 +151,4 @@ export default {
 
 <style lang="stylus">
 @import '@/assets/css/base.styl';
-
-.w-e-text-container {
-  img {
-    left: 0;
-    right: 0;
-    margin: (margin-space * 2) auto;
-    display: block;
-    width: 50%;
-    height: auto;
-  }
-}
 </style>

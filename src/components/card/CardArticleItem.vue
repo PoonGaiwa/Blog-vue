@@ -52,7 +52,7 @@ export default {
       return this.article.cover;
     },
     content() {
-      let content = this.article.content.match(/>([^<>]+)</)[1];
+      let content = this.article.content.match(/>([^<>]+)</)?.[1];
       return content || "默认内容";
     },
     hits_num() {
@@ -70,7 +70,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '@/assets/css/global.styl';
 @import '@/assets/css/base.styl';
 
 .blog-content--item {
