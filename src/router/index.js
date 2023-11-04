@@ -11,6 +11,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Article from '../views/Article.vue'
 import ArticleList from '../views/ArticleList.vue'
+import Editor from '../views/Editor.vue'
 import Column from '../views/Column.vue'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -27,7 +28,8 @@ const routes = [
     children: [
       { path: '/index', name: 'index', component: ArticleList },
       { path: '/columns', name: 'columns', component: Column, meta: { requiresAuth: true } },
-      { path: '/article/:id', name: 'article', component: Article, props: true},
+      { path: '/article/:id', name: 'article', component: Article, props: true },
+      { path: '/editor', name: 'editor', component: Editor },
     ]
   },
 ]
