@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:40:45
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-03 16:56:50
+ * @LastEditTime: 2023-11-05 13:24:26
  * @FilePath: \vue-blog\src\views\Article.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -54,7 +54,6 @@ export default {
           data: { id: this.id },
         });
         this.article = result.data;
-        console.log(this.article);
       } catch (err) {
         this.$notify.success({
           title: "获取失败",

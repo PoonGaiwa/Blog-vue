@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 21:52:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-03 16:08:56
+ * @LastEditTime: 2023-11-05 14:06:38
  * @FilePath: \vue-blog\src\components\base\BaseHeader.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -37,6 +37,7 @@
           mode="horizontal"
           text-color="#fafafa"
           default-active="/index"
+          ref="active-page"
           router
         >
           <el-menu-item index="/index">首页</el-menu-item>
@@ -68,6 +69,12 @@ export default {
     if (isLogin && !nickName) {
       this.$store.dispatch("getUserInfo");
     }
+  },
+  watch: {
+    $route(to) {
+      let pathName = to?.path;
+      this.$refs["active-page"].activeIndex = pathName;
+    },
   },
   computed: {
     loginComponent() {

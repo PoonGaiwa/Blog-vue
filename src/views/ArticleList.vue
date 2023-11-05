@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:40:39
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-03 17:25:46
+ * @LastEditTime: 2023-11-05 14:44:05
  * @FilePath: \vue-blog\src\views\ArticleList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%
 -->
@@ -22,6 +22,7 @@
 
 <script>
 import CardArticleItem from "@/components/card/CardArticleItem.vue";
+import QS from "qs";
 export default {
   name: "ArticleListView",
   components: { CardArticleItem },
@@ -35,7 +36,6 @@ export default {
       articleList: [],
       page: 1,
       size: 4,
-      scrollTop: 0,
     };
   },
   created() {
@@ -49,12 +49,32 @@ export default {
         this.getArticles();
       }
     },
+    $route(to) {
+      if (to.name === 'index') {
+        this.cancelArticles();
+        this.getArticles();
+      }
+    },
   },
   methods: {
-    getArticles() {
-      this.$api({
+    setQuery() {
+      let column = this.$route.query?.columnId;
+      let q = this.$route.query?.q;
+      let query = JSON.parse(JSON.stringify({ column, q }));
+      return query;
+    },
+    cancelArticles() {
+      this.articleList = [];
+    },
+    async getArticles() {
+      let data = { size: this.size, page: this.page };
+      let query = this.setQuery();
+      if (Object.entries(query).length > 0) {
+        data.query = QS.stringify(query);
+      }
+      await this.$api({
         type: "articles",
-        data: { size: this.size, page: this.page },
+        data,
       })
         .then((result) => {
           if (this.articleList.length >= result.total) {
