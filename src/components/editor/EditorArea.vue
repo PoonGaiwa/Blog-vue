@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-11-04 11:12:38
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-04 22:17:03
+ * @LastEditTime: 2023-11-05 11:33:54
  * @FilePath: \vue-blog\src\components\editor\EditorTextArea.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -11,7 +11,7 @@
     <div class="blog-editor-textarea">
       <Toolbar :editor="editor" :defaultConfig="toolbarConfig" :mode="mode" />
       <Editor
-        style="height: 55vh; overflow-y: hidden"
+        style="height: 50vh; overflow-y: hidden"
         v-model="html"
         :defaultConfig="editorConfig"
         :mode="mode"
@@ -19,9 +19,19 @@
       />
     </div>
     <div class="blog-editor--footer">
-      <EditorClassify></EditorClassify>
+      <div class="blog-editor--classify">
+        <h3>分类</h3>
+        <el-radio-group class="blog-editor--select" v-model="column">
+          <el-radio-button
+            v-for="item in columns"
+            :key="item._id"
+            :label="item._id"
+            >{{ item.name }}</el-radio-button
+          >
+        </el-radio-group>
+      </div>
       <div class="blog-editor--control">
-        <a @click="clearContent" class="blog-submit--article">清空</a>
+        <a @click="clearContent" class="blog-clear--article">清空</a>
         <a @click="submitArticle" class="blog-submit--article">提交</a>
       </div>
     </div>
@@ -30,10 +40,9 @@
 
 <script>
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
-import EditorClassify from "@/components/editor/EditorClassify.vue";
 import Vue from "vue";
 export default {
-  components: { Editor, Toolbar, EditorClassify },
+  components: { Editor, Toolbar },
   data() {
     return {
       editor: null,
@@ -70,6 +79,8 @@ export default {
         },
       },
       mode: "default", // or 'simple'
+      columns: [],
+      column: "",
     };
   },
   props: {
@@ -77,15 +88,28 @@ export default {
       type: String,
     },
   },
+  created() {
+    this.getColumns();
+  },
   inject: ["clearTitle"],
-
   methods: {
+    getColumnId(id) {
+      this.column = id;
+    },
+    async getColumns() {
+      try {
+        let result = await this.$api({ type: "columns" });
+        this.columns = result.data.list;
+        this.column = this.columns[0]?._id;
+      } catch (err) {
+        console.log(err);
+      }
+    },
     onCreated(editor) {
       this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
     },
     clearContent() {
       this.editor.clear();
-      console.log(this.editor);
       this.clearTitle();
     },
     submitArticle() {
@@ -116,20 +140,20 @@ export default {
       let postData = {
         title: this.title,
         content: content,
-        // TODO 封装column
-        column: "652f9db7936703d2b737d3d0",
+        column: this.column,
         author: this.$store.state.userInfo._id,
-        cover: this.content.match(/src="([^"'"]*)"/)?.[1] || undefined,
+        cover: content.match(/src="([^"']*)"/)?.[1] || undefined,
       };
       try {
         let result = await this.$api({
           type: "postArticle",
           data: JSON.parse(JSON.stringify(postData)),
         });
+        console.log(result);
         this.$notify.success({
           message: result.message,
         });
-        this.$route.push("/index");
+        this.$router.push("/index");
       } catch (err) {
         this.$notify.error({
           message: err.message,
@@ -151,4 +175,61 @@ export default {
 
 <style lang="stylus">
 @import '@/assets/css/base.styl';
+
+.blog-editor--control {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  padding: padding-space;
+
+  a {
+    margin: margin-space margin-space 0 margin-space;
+    padding: padding-space * 0.2 (padding-space * 3);
+    height: 1.5rem;
+    line-height: 1.5rem;
+    color: font-head-color;
+    border-radius: border-radius-default * 0.5;
+    background-color: theme-color;
+
+    &:hover {
+      color: lighten(font-head-color, 20%);
+      background-color: lighten(theme-color, 20%);
+    }
+  }
+}
+
+.blog-editor--classify {
+  display: flex;
+  align-items: center;
+  margin-top: margin-space * 2;
+
+  h3 {
+    margin-top: margin-space;
+    font-size: 18px;
+    line-height: font-size-h;
+  }
+}
+
+.blog-editor--select {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  flex-wrap: wrap;
+
+  .el-radio-button__inner {
+    margin: margin-space 0 0 margin-space;
+    padding: padding-space;
+    border: 1px solid theme-color !important;
+    border-radius: border-radius-default * 2 !important;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: theme-color;
+      color: font-head-color;
+    }
+  }
+}
 </style>
