@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 18:50:11
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-04 21:49:26
+ * @LastEditTime: 2023-11-05 16:51:08
  * @FilePath: \vue-blog\src\main.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -20,7 +20,7 @@ import '@/plugins/vuescroll'
 Vue.config.productionTip = false
 Vue.use(animated)
 
-
+Vue.prototype.$EventBus = new Vue()
 
 new Vue({
   store,

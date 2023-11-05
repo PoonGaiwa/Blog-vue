@@ -3,6 +3,7 @@
     <h3 class="blog-comment--title">看文章是喜欢，评论才是真爱：</h3>
     <textarea
       class="blog-comment--input"
+      ref="textarea"
       name="comment"
       v-model="commentVal"
       placeholder="请写下你的评论..."
@@ -32,8 +33,23 @@ export default {
       return this.$store.state.userInfo._id;
     },
   },
+  mounted() {
+    this.$EventBus.$on("focusComment", () => {
+      this.focusTextarea();
+    });
+  },
   methods: {
+    focusTextarea() {
+      this.$refs.textarea?.focus();
+    },
     async submitComment() {
+      if (this.commentVal.trim().length === 0) {
+        this.$notify.warning({
+          message: "内容不能为空",
+        });
+        this.focusTextarea();
+        return;
+      }
       try {
         await this.$api({
           type: "postComment",
@@ -49,6 +65,7 @@ export default {
           message: err.message,
         });
       }
+      this.commentVal = "";
     },
   },
 };
