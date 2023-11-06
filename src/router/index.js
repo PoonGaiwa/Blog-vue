@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:39:16
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-02 21:34:27
+ * @LastEditTime: 2023-11-06 15:59:53
  * @FilePath: \vue-blog\src\router\index.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -26,10 +26,12 @@ const routes = [
     redirect: '/index',
     component: Home,
     children: [
-      { path: '/index', name: 'index', component: ArticleList },
+      { path: '/index', name: 'index', component: ArticleList, props: (route) => ({ columnId: route.query?.columnId }) },
       { path: '/columns', name: 'columns', component: Column, meta: { requiresAuth: true } },
       { path: '/article/:id', name: 'article', component: Article, props: true },
-      { path: '/editor', name: 'editor', component: Editor },
+      {
+        path: '/editor', name: 'editor', component: Editor, props: (route) => ({ columnId: route.query.columnId })
+      },
     ]
   },
 ]

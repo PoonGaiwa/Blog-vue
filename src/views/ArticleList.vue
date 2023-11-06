@@ -2,20 +2,30 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:40:39
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-05 14:44:05
+ * @LastEditTime: 2023-11-06 16:01:00
  * @FilePath: \vue-blog\src\views\ArticleList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%
 -->
 <template>
-  <div v-if="articleList" class="article-wrap">
-    <el-card
-      v-for="item in articleList"
-      :key="item._id"
-      class="blog-article--item"
-    >
-      <router-link :to="{ name: 'article', params: { id: item._id } }">
-        <CardArticleItem :article="item"></CardArticleItem>
-      </router-link>
+  <div class="article-wrap">
+    <div v-if="hasArticle">
+      <el-card
+        v-for="item in articleList"
+        :key="item._id"
+        class="blog-article--item"
+      >
+        <router-link :to="{ name: 'article', params: { id: item._id } }">
+          <CardArticleItem :article="item"></CardArticleItem>
+        </router-link>
+      </el-card>
+    </div>
+    <el-card v-else class="blog-content--item blog-content-never">
+      <div class="blog-none-tips">
+        <h3 class="blog-item--title">很遗憾 没有找到对应的文章</h3>
+        <el-button class="blog-item-btn" type="primary" @click="routeEditor"
+          >去写一篇吧</el-button
+        >
+      </div>
     </el-card>
   </div>
 </template>
@@ -30,7 +40,11 @@ export default {
     loading: {
       type: Boolean,
     },
+    columnId: {
+      type: String,
+    },
   },
+  inject: ["closeLoadClock"],
   data() {
     return {
       articleList: [],
@@ -41,8 +55,11 @@ export default {
   created() {
     this.getArticles();
   },
-  inject: ["closeLoadClock"],
-  computed: {},
+  computed: {
+    hasArticle() {
+      return this.articleList.length > 0;
+    },
+  },
   watch: {
     loading(load) {
       if (load) {
@@ -50,17 +67,20 @@ export default {
       }
     },
     $route(to) {
-      if (to.name === 'index') {
+      if (to.name === "index") {
         this.cancelArticles();
         this.getArticles();
       }
     },
   },
   methods: {
+    routeEditor() {
+      let columnId = this.$route.query.columnId;
+      this.$router.push({ name: "editor", query: { columnId } });
+    },
     setQuery() {
-      let column = this.$route.query?.columnId;
-      let q = this.$route.query?.q;
-      let query = JSON.parse(JSON.stringify({ column, q }));
+      let column = this?.columnId;
+      let query = JSON.parse(JSON.stringify({ column }));
       return query;
     },
     cancelArticles() {
@@ -127,5 +147,23 @@ export default {
 .el-card__body {
   background-color: bg-main-color;
   padding: 0;
+}
+
+.blog-content-never {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blog-none-tips {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .blog-item-btn {
+    margin-top: margin-space * 2;
+    width: 50%;
+  }
 }
 </style>

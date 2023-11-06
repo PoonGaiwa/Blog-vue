@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-11-04 11:12:38
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-05 11:33:54
+ * @LastEditTime: 2023-11-06 15:55:23
  * @FilePath: \vue-blog\src\components\editor\EditorTextArea.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -84,12 +84,16 @@ export default {
     };
   },
   props: {
+    columnId: {
+      type: String,
+    },
     title: {
       type: String,
     },
   },
   created() {
     this.getColumns();
+    console.log(this.columnId);
   },
   inject: ["clearTitle"],
   methods: {
@@ -100,7 +104,8 @@ export default {
       try {
         let result = await this.$api({ type: "columns" });
         this.columns = result.data.list;
-        this.column = this.columns[0]?._id;
+        this.column =
+          this.columnId === undefined ? this.columns[0]?._id : this.columnId;
       } catch (err) {
         console.log(err);
       }
