@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 23:27:21
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-31 10:40:26
+ * @LastEditTime: 2023-11-06 15:15:40
  * @FilePath: \vue-blog\src\config\modal.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -17,7 +17,7 @@ export default {
       },
       {
         targetName: 'confirm',
-        name: '提交',
+        name: '登录',
         isSubmit: true
       }
     ]
@@ -39,11 +39,17 @@ export default {
   },
   "column": {
     title: '添加文章分类',
-    formType: 'column',
+    formType: 'postColumn',
+    needUpdate: true,
     btns: [
       {
+        targetName: 'close',
+        name: '取消',
+      },
+      {
         targetName: 'confirm',
-        name: '提交',
+        name: '添加',
+        isSubmit: true
       }
     ]
   },
@@ -54,7 +60,8 @@ export default {
       {
         targetName: 'confirm',
         name: '保存',
-        type: 'submit'
+        type: 'submit',
+        isSubmit: true
       }
     ]
   },

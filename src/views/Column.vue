@@ -45,6 +45,11 @@ export default {
       });
     },
   },
+  mounted() {
+    this.$EventBus.$on("updateView", () => {
+      this.getColumns();
+    });
+  },
   beforeDestroy() {
     let aDiv = document.querySelectorAll(".tooltip");
     aDiv.forEach((item) => {

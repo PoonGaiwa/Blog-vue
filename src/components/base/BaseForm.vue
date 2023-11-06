@@ -1,3 +1,11 @@
+<!--
+ * @Author: Gaiwa 13012265332@163.com
+ * @Date: 2023-10-31 09:33:12
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-11-06 14:36:51
+ * @FilePath: \vue-blog\src\components\base\BaseForm.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div>
     <el-form :model="form" ref="elForm" v-if="formData">
@@ -12,7 +20,8 @@
         <el-input
           v-model="form[item['query']]"
           :type="item.type"
-          :name="item['query']"
+          :placeholder="item.placeholder"
+          name="item['query']"
           autocomplete="off"
         ></el-input>
       </el-form-item>

@@ -19,6 +19,12 @@ export default {
       route: "/editor",
     },
   ],
+  columns: () => [
+    {
+      icon: "el-icon-plus",
+      handler: 'addColumn'
+    },
+  ],
   article: () => [
     {
       icon: "iconfont icon-like",

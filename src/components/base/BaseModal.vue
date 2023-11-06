@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 23:22:44
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-01 00:11:01
+ * @LastEditTime: 2023-11-06 15:11:50
  * @FilePath: \vue-blog\src\components\base\BaseModal.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,7 +14,7 @@
       :width="width"
       :before-close="close"
     >
-      <BaseForm :type="type" v-if="hasForm" ref="form" />
+      <BaseForm :type="type" v-if="formType" ref="form" />
       <div slot="footer" class="dialog-footer">
         <el-button
           v-for="btn in btns"
@@ -48,8 +48,11 @@ export default {
     width() {
       return MODAL_DATA[this.type]?.width ?? "60%";
     },
-    hasForm() {
+    formType() {
       return MODAL_DATA[this.type]?.formType;
+    },
+    needUpdate() {
+      return MODAL_DATA[this.type]?.needUpdate;
     },
     btns() {
       return (
@@ -75,13 +78,23 @@ export default {
       this[action] && this[action]();
     },
     submitForm() {
+      if (!this.formType) {
+        return false;
+      }
       let refForm = this.$refs["form"];
       refForm.$refs["elForm"].validate(async (valid) => {
         if (valid) {
-          await this.$api({ type: this.type, data: refForm.form });
-          this.close();
+          try {
+            await this.$api({ type: this.formType, data: refForm.form });
+            this.close();
+            if (this.needUpdate) {
+              this.$EventBus.$emit("updateView");
+            }
+          } catch (err) {
+            refForm.$refs["elForm"].resetFields();
+          }
         } else {
-          refForm.$refs["elForm"].resetFields();
+          return false;
         }
       });
     },
