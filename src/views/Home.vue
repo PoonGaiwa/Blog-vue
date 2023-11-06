@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:39:16
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-05 16:39:58
+ * @LastEditTime: 2023-11-06 16:40:42
  * @FilePath: \vue-blog\src\views\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,7 +22,7 @@
         >
           <el-main class="blog-main">
             <Scroll ref="scrollView" @handle-scroll="loadContent">
-              <router-view :loading="loading"></router-view>
+              <router-view v-if="isRouteShow" :loading="loading"></router-view>
             </Scroll>
           </el-main>
         </el-col>
@@ -59,6 +59,7 @@ export default {
       loading: false,
       menuList: [],
       scrollTop: 0,
+      isRouteShow: true,
     };
   },
   provide() {
@@ -69,9 +70,16 @@ export default {
   watch: {
     $route(to) {
       this.menuList = menuListConfig[to.name]?.() || [];
+      this.reload();
     },
   },
   methods: {
+    reload() {
+      this.isRouteShow = false;
+      this.$nextTick(function () {
+        this.isRouteShow = true;
+      });
+    },
     loadContent: _.throttle(
       function (vertical, horizontal, nativeEvent) {
         this.scrollTop = vertical.scrollTop;

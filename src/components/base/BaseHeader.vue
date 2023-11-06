@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 21:52:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-05 14:06:38
+ * @LastEditTime: 2023-11-06 17:04:54
  * @FilePath: \vue-blog\src\components\base\BaseHeader.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -46,6 +46,17 @@
           <el-menu-item index="/cases">案例</el-menu-item>
         </el-menu>
       </el-col>
+      <el-col :span="6" class="hidden-xs-only">
+        <el-input
+          class="blog-input--search"
+          placeholder="请输入搜索内容..."
+          v-model="searchVal"
+          @keydown.native.enter="activeSearch"
+          autosize
+        >
+          <i v-show="searchVal" slot="suffix" class="el-input__icon el-icon-search" @click="activeSearch"></i>
+        </el-input>
+      </el-col>
       <el-col :span="2" class="hidden-xs-only">
         <component :is="loginComponent"></component>
       </el-col>
@@ -62,6 +73,11 @@ export default {
   components: {
     UserLoginHead,
     UserImgAvatar,
+  },
+  data() {
+    return {
+      searchVal: "",
+    };
   },
   created() {
     let isLogin = this.$store.state.token;
@@ -81,6 +97,12 @@ export default {
       return this.$store.state.token ? "UserImgAvatar" : "UserLoginHead";
     },
     ...mapGetters(["userInfo"]),
+  },
+  methods: {
+    activeSearch() {
+      this.$EventBus.$emit('activeSearch', this.searchVal)
+      this.searchVal = ''
+    },
   },
 };
 </script>
@@ -142,5 +164,15 @@ export default {
 
 .blog-header--login {
   text-align: center;
+}
+
+.blog-input--search {
+  max-width: 300px;
+
+  input {
+    height: 36px;
+    font-weight: normal;
+    font-size: 1rem;
+  }
 }
 </style>

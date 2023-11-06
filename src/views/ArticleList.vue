@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:40:39
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-06 16:01:00
+ * @LastEditTime: 2023-11-06 16:57:47
  * @FilePath: \vue-blog\src\views\ArticleList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%
 -->
@@ -50,6 +50,7 @@ export default {
       articleList: [],
       page: 1,
       size: 4,
+      q: "",
     };
   },
   created() {
@@ -66,29 +67,33 @@ export default {
         this.getArticles();
       }
     },
-    $route(to) {
-      if (to.name === "index") {
-        this.cancelArticles();
-        this.getArticles();
-      }
-    },
+  },
+  mounted() {
+    this.$EventBus.$on("activeSearch", (q) => {
+      this.resetArticles();
+      this.q = q;
+      this.getArticles();
+    });
   },
   methods: {
     routeEditor() {
       let columnId = this.$route.query.columnId;
       this.$router.push({ name: "editor", query: { columnId } });
     },
-    setQuery() {
+    getQuery() {
       let column = this?.columnId;
-      let query = JSON.parse(JSON.stringify({ column }));
+      let q = this.q || undefined;
+      let query = JSON.parse(JSON.stringify({ column, q }));
       return query;
     },
-    cancelArticles() {
+    resetArticles() {
       this.articleList = [];
+      this.page = 1;
+      this.q = "";
     },
     async getArticles() {
       let data = { size: this.size, page: this.page };
-      let query = this.setQuery();
+      let query = this.getQuery();
       if (Object.entries(query).length > 0) {
         data.query = QS.stringify(query);
       }
