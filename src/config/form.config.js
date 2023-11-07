@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-31 10:35:49
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-06 14:21:17
+ * @LastEditTime: 2023-11-07 17:16:56
  * @FilePath: \vue-blog\src\config\form.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -69,16 +69,15 @@ export default {
       placeholder: '请输入邮箱'
     },
     {
-      label: '密码',
-      query: 'password',
-      type: 'password',
-      placeholder: '请输入8-12位密码 最少包含一位（数字/大小写字母和特殊字符）'
-    },
-    {
       label: '签名',
       query: 'signature',
       type: 'text',
       placeholder: '请输入你的个性签名吧'
-    }
+    },
+    {
+      label: '头像',
+      query: 'avatar',
+      type: 'image',
+    },
   ]
 }
