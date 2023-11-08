@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-11-02 23:48:10
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-04 17:05:59
+ * @LastEditTime: 2023-11-08 12:59:21
  * @FilePath: \vue-blog\src\components\base\BaseArticleContent.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,9 +21,12 @@
             <span class="blog-article--like iconfont icon-browse">{{
               hits_num
             }}</span>
-            <span class="blog-article--like iconfont icon-like">{{
-              like_num
-            }}</span>
+            <span
+              class="blog-article--like iconfont icon-like"
+              :class="{ active: isLike }"
+              @click="like"
+              >{{ likeNum }}</span
+            >
             <span class="blog-article--comment iconfont icon-comment">{{
               comment_num
             }}</span>
@@ -41,9 +44,20 @@
 <script>
 export default {
   name: "BaseArticleContent",
+  data() {
+    return {
+      isLike: false,
+    };
+  },
   props: {
     article: {
       type: Object,
+    },
+    aid: {
+      type: String,
+    },
+    liked: {
+      type: Boolean,
     },
   },
   computed: {
@@ -55,9 +69,6 @@ export default {
     },
     hits_num() {
       return this.article.hits_num;
-    },
-    like_num() {
-      return this.article.like_num;
     },
     comment_num() {
       return this.article.comment_num;
@@ -71,6 +82,27 @@ export default {
     nickname() {
       return this.author?.nickname || "无名氏";
     },
+    likeNum() {
+      return this.article.like_num + !!this.isLike;
+    },
+    // isLike() {
+    //   let likeUsers = this.article?.like_users || [];
+    //   let uid = this.$store.state.userInfo._id;
+    //   return likeUsers.includes(uid);
+    // },
+  },
+  methods: {
+    like() {
+      this.isLike = !this.isLike;
+    },
+  },
+  async beforeDestroy() {
+    if (this.isLike) {
+      await this.$api({
+        type: "addArticleLike",
+        data: { id: this.article._id, isLike: false },
+      });
+    }
   },
 };
 </script>
@@ -194,6 +226,14 @@ export default {
       padding-right: padding-space * 4;
     }
   }
+}
+
+.blog-article--like {
+  cursor: pointer;
+}
+
+.blog-article--like.active {
+  color: theme-color;
 }
 
 .blog-article--date {

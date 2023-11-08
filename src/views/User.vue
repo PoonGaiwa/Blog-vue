@@ -2,15 +2,16 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-11-07 16:16:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-07 19:06:40
+ * @LastEditTime: 2023-11-08 10:06:40
  * @FilePath: \vue-blog\src\views\User.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <el-card>
     <div slot="header" class="clearfix"><span>个人信息</span></div>
-    <BaseForm ref="userForm" type="userInfo" />
+    <BaseForm v-if="isCreated" ref="userForm" type="userInfo" />
     <el-button type="primary" @click="submit">提交修改</el-button>
+    <el-button type="primary" @click="reset">重置信息</el-button>
   </el-card>
 </template>
 
@@ -25,6 +26,7 @@ export default {
   data() {
     return {
       form: {},
+      isCreated: true,
     };
   },
   created() {
@@ -56,10 +58,11 @@ export default {
         }
       });
     },
-    submitForm() {
-      if (!this.formType) {
-        return false;
-      }
+    reset() {
+      this.isCreated = false;
+      this.$nextTick(function () {
+        this.isCreated = true;
+      });
     },
   },
 };
