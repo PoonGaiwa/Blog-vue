@@ -6,9 +6,23 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "18170313",
+      "name": "心,心形,心脏,爱心,实心",
+      "font_class": "like-full",
+      "unicode": "e99f",
+      "unicode_decimal": 59807
+    },
+    {
+      "icon_id": "18170314",
+      "name": "心,心形,心脏,爱心,实心",
+      "font_class": "like",
+      "unicode": "e9a0",
+      "unicode_decimal": 59808
+    },
+    {
       "icon_id": "6399129",
       "name": "发文章",
-      "font_class": "weibiaoti--",
+      "font_class": "write",
       "unicode": "e60e",
       "unicode_decimal": 58894
     },
@@ -20,16 +34,9 @@
       "unicode_decimal": 58881
     },
     {
-      "icon_id": "6337455",
-      "name": "点赞",
-      "font_class": "dianzan1",
-      "unicode": "ec7f",
-      "unicode_decimal": 60543
-    },
-    {
       "icon_id": "17605478",
       "name": "浏览",
-      "font_class": "liulan1",
+      "font_class": "browser",
       "unicode": "e816",
       "unicode_decimal": 59414
     }

@@ -3,4 +3,5 @@ export default {
   'TOKENNAME': 'ua_jot',
   'PUBKEYNAME': 'ua_publicKey',
   'TIMEOUT': 5000,
+  'LIKES_NAME': 'ua_likes'
 }

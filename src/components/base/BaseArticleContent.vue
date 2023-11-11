@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-11-02 23:48:10
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-08 12:59:21
+ * @LastEditTime: 2023-11-11 18:15:23
  * @FilePath: \vue-blog\src\components\base\BaseArticleContent.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,8 +22,8 @@
               hits_num
             }}</span>
             <span
-              class="blog-article--like iconfont icon-like"
-              :class="{ active: isLike }"
+              class="blog-article--like iconfont"
+              :class="{ active: isLike, [likeIcon]: true }"
               @click="like"
               >{{ likeNum }}</span
             >
@@ -42,11 +42,13 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("likes");
 export default {
   name: "BaseArticleContent",
   data() {
     return {
-      isLike: false,
+      stepNum: 0,
     };
   },
   props: {
@@ -61,6 +63,15 @@ export default {
     },
   },
   computed: {
+    isLike() {
+      return this.localLike(this.aid);
+    },
+    likeIcon() {
+      if (this.isLike) {
+        return "icon-like-full";
+      }
+      return "icon-like";
+    },
     title() {
       return this.article.title;
     },
@@ -83,26 +94,21 @@ export default {
       return this.author?.nickname || "无名氏";
     },
     likeNum() {
-      return this.article.like_num + !!this.isLike;
+      return Math.max(this.article.like_num + this.stepNum, 0);
     },
-    // isLike() {
-    //   let likeUsers = this.article?.like_users || [];
-    //   let uid = this.$store.state.userInfo._id;
-    //   return likeUsers.includes(uid);
-    // },
+    ...mapGetters({
+      localLike: "isLike",
+    }),
   },
+  created() {},
+  mounted() {},
   methods: {
     like() {
-      this.isLike = !this.isLike;
+      this.stepNum += this.isLike ? -1 : 1;
+      this[this.isLike ? "pullLike" : "pushLike"]({ aid: this.aid });
+      this.sendLikes({ aid: this.aid, isLike: this.isLike });
     },
-  },
-  async beforeDestroy() {
-    if (this.isLike) {
-      await this.$api({
-        type: "addArticleLike",
-        data: { id: this.article._id, isLike: false },
-      });
-    }
+    ...mapActions(["pullLike", "pushLike", "sendLikes"]),
   },
 };
 </script>
@@ -110,35 +116,6 @@ export default {
 <style lang="stylus">
 @import '@/assets/css/base.styl';
 @import '@/assets/css/typo.css';
-
-@font-face {
-  font-family: 'iconfont';
-  src: url('@/assets/icon/iconfont.woff2?t=1697774086716') format('woff2'), url('@/assets/icon/iconfont.woff?t=1697774086716') format('woff'), url('@/assets/icon/iconfont.ttf?t=1697774086716') format('truetype');
-}
-
-.iconfont {
-  font-family: 'iconfont' !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-write:before {
-  content: '\e60e';
-}
-
-.icon-comment:before {
-  content: '\e601';
-}
-
-.icon-like:before {
-  content: '\ec7f';
-}
-
-.icon-browse:before {
-  content: '\e816';
-}
 
 .blog-article-wrap {
   box-sizing: border-box;
