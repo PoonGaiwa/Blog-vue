@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-30 20:39:16
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-11-06 16:40:42
+ * @LastEditTime: 2023-11-18 17:48:35
  * @FilePath: \vue-blog\src\views\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,7 +10,7 @@
   <div class="blog-page">
     <el-container class="blog-container">
       <BaseHeader />
-      <el-row class="blog-content">
+      <el-row class="blog-content" v-if="$route.name !== 'map'">
         <el-col :lg="{ span: 6, offset: 1 }" :xl="6" class="hidden-md-and-down">
           <BaseAside v-if="$store.state.token" />
         </el-col>
@@ -30,7 +30,10 @@
           <BaseCircleMenu :menuList="menuList"></BaseCircleMenu>
         </el-col>
       </el-row>
-      <el-footer class="blog-footer" height="10vh">底部</el-footer>
+      <el-main v-else class="blog-content--map">
+        <router-view></router-view>
+      </el-main>
+      <BaseFooter></BaseFooter>
     </el-container>
     <BaseModal />
   </div>
@@ -42,6 +45,7 @@ import BaseHeader from "@/components/base/BaseHeader";
 import BaseAside from "@/components/base/BaseAside";
 import BaseCircleMenu from "@/components/base/BaseCircleMenu";
 import menuListConfig from "@/config/menuList.config";
+import BaseFooter from "@/components/base/BaseFooter.vue";
 import _ from "lodash";
 const TH = 200;
 
@@ -53,6 +57,7 @@ export default {
     BaseHeader,
     BaseAside,
     BaseCircleMenu,
+    BaseFooter,
   },
   data() {
     return {
@@ -118,7 +123,8 @@ export default {
 @import '@/assets/css/base.styl';
 
 .blog-container {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .blog-content {
@@ -130,6 +136,15 @@ export default {
   left: 0;
   right: 0;
   margin: 0 auto;
+}
+
+.blog-content--map {
+  height: calc(100vh - 60px - 10vh);
+  width: 100%;
+}
+
+.blog-map--con {
+  height: 100%;
 }
 
 .blog-content .blog-main-wrap {

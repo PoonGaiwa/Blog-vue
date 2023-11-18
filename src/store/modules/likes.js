@@ -29,7 +29,6 @@ export default {
   actions: {
     pushLike({ commit }, payload) {
       let { aid } = payload
-      console.log(aid, '点赞');
       if (aid) {
         let localLikes = store.get(LIKES_NAME) || []
         let idx = localLikes.indexOf(aid)
@@ -42,7 +41,6 @@ export default {
     },
     pullLike({ commit }, payload) {
       let { aid } = payload
-      console.log(aid, '取消点赞');
       if (aid) {
         let localLikes = store.get(LIKES_NAME) || []
         let idx = localLikes.indexOf(aid)
@@ -54,7 +52,6 @@ export default {
       }
     },
     async sendLikes({ state }, { aid }) {
-      
       console.log(state);
       await Vue.prototype.$api({ type: "addArticleLike", data: { id: aid } })
     }
